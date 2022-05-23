@@ -5,10 +5,11 @@ address-list {
 address-list header.sticky {
   position: sticky;
   top: 0;
-  padding: 1ex 0 ;
+  padding: 1ex 0;
   margin-bottom: 0;
   border-bottom: 2px solid var(--white);
   background-color: #fff;
+  z-index: 100;
 }
 
 address-list header.sticky h1 {
@@ -24,7 +25,6 @@ address-list footer.sticky {
   background-color: #fff;
 }
 
-
 address-list ul {
   display: block;
   margin: 0;
@@ -37,7 +37,7 @@ address-list ul li {
 }
 
 address-list ul li ~ li {
-  border-top: 1px solid var(--white)
+  border-top: 1px solid var(--white);
 }
 
 address-list button.address-button {
@@ -47,7 +47,7 @@ address-list button.address-button {
   border: none;
   width: 100%;
   padding: 1ex;
-  cursor: pointer;   
+  cursor: pointer;
   text-align: left;
 }
 
@@ -66,7 +66,6 @@ address-list button.address-button:focus {
   background-color: var(--yellow);
   outline: none;
 }
-
 
 address-list button.address-button:hover {
   background-color: var(--white);

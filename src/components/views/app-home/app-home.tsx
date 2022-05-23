@@ -19,6 +19,7 @@ export class AppHome {
   }
 
   search() {
+    state.searchQuery = this.queryString;
     if (this.searchType == 'nearby') {
       this.searchNearby();
       return;
@@ -55,7 +56,21 @@ export class AppHome {
     }
   }
 
-  searchNearby() {}
+  searchNearby() {
+    state.gpsId = navigator.geolocation.watchPosition(
+      position => {
+        state.position = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        };
+      },
+      error => {
+        state.errorMessage = error.message;
+      },
+    );
+
+    this.history.push('/addresses');
+  }
 
   searchStreets() {
     request
@@ -80,7 +95,11 @@ export class AppHome {
       });
   }
 
-  setStreet(usrn: number) {
+  setStreet(usrn: number, description: string = null) {
+    state.currentStreet = {
+      usrn,
+      description,
+    };
     request
       .get('/addresses', {
         params: { street: usrn },
@@ -96,8 +115,18 @@ export class AppHome {
       });
   }
 
+  NearbyText() {
+    if (!navigator.geolocation) {
+      return (
+        <alert-element theme="danger">Geolocation is not supported on this device, or is switched off. You'll need to enable it to use your location on this app.</alert-element>
+      );
+    }
+
+    return <p>This will request location permissions on your device.</p>;
+  }
+
   searchTypes = [
-    { key: 'nearby', label: 'Nearby', component: <p>This will request location permissions on your device.</p> },
+    { key: 'nearby', label: 'Nearby', component: <this.NearbyText /> },
     { key: 'street', label: 'Street Name', component: <text-input name="street-name" onChanged={e => this.updateQuery(e)} /> },
     { key: 'postcode', label: 'Postcode', component: <postcode-input name="postcode" onChanged={e => this.updateQuery(e)} /> },
   ];
@@ -109,7 +138,7 @@ export class AppHome {
             <h1>Get started</h1>
           </header>
           <section>
-            <alert-element dismissable={false}>The Doorstep App allows you to enter survey responses as you knock on doors or speak to people.</alert-element>
+            <p>The Doorstep App allows you to enter survey responses as you knock on doors or speak to people.</p>
 
             <field-element useLabel={false} label="Search type">
               {this.searchTypes.map(type => (
@@ -136,13 +165,20 @@ export class AppHome {
               <ul role="list">
                 {this.possibleStreets.map(street => (
                   <li key={street.usrn}>
-                    <text-button onClick={() => this.setStreet(street.usrn)}>
-                      {street.description} - {street.admin_area} ({street.households || '0'} hh)
+                    <text-button onClick={() => this.setStreet(street.usrn, street.description)}>
+                      {street.description} - {street.locality || street.admin_area} ({street.households || '0'} hh)
                     </text-button>
                   </li>
                 ))}
               </ul>
             </div>
+            <button-control
+              label="Close"
+              onClick={() => {
+                this.possibleStreets = [];
+                state.currentStreet = null;
+              }}
+            />
           </aside>
         )}
       </Host>

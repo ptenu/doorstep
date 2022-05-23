@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, State } from '@stencil/core';
 import state from '../../../global/store';
 import { RouterHistory } from '@stencil/router';
 
@@ -8,10 +8,43 @@ import { RouterHistory } from '@stencil/router';
 })
 export class AddressList {
   @Prop() history: RouterHistory;
+  @State() restored: boolean = false;
+
+  componentWillLoad() {
+    if (state.gpsId == 0 && state.currentStreet == null && state.searchQuery == '') {
+      this.restored = true;
+    }
+  }
+
+  HeaderText() {
+    if (state.gpsId !== 0) {
+      return <h1>Nearby Addresses ({state.addressList.length})</h1>;
+    }
+
+    if (state.currentStreet !== null) {
+      return (
+        <h1>
+          {state.currentStreet.description} ({state.addressList.length})
+        </h1>
+      );
+    }
+
+    if (state.searchQuery != '') {
+      return (
+        <h1>
+          {state.searchQuery} ({state.addressList.length})
+        </h1>
+      );
+    }
+    return <h1>Addresses ({state.addressList.length})</h1>;
+  }
 
   back() {
-    sessionStorage.removeItem('addresses');
     state.addressList = [];
+    sessionStorage.removeItem('addresses');
+    navigator.geolocation.clearWatch(state.gpsId);
+    state.currentStreet = null;
+    state.searchQuery = '';
     this.history.push('/');
   }
   render() {
@@ -19,9 +52,16 @@ export class AddressList {
       <Host>
         <content-container>
           <header class="sticky">
-            <h1>Addresses ({state.addressList.length})</h1>
+            <this.HeaderText />
           </header>
           <section>
+            {state.gpsId !== 0 && <alert-element dismissable={false}>Your location (and this list) will update automaticaly as you move around.</alert-element>}
+            {this.restored && (
+              <alert-element dismissable={false} theme="warning">
+                These addresses were restored from the cache; if you were viewing nearby addresses, your GPS location will no longer update automaticaly.
+              </alert-element>
+            )}
+
             <ul role="list">
               {state.addressList.map(address => (
                 <li>

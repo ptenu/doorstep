@@ -10,4 +10,9 @@ export default async () => {
   } else {
     console.log('NOT ACTIVE');
   }
+
+  const addressList = sessionStorage.getItem('addresses');
+  if (addressList != null) {
+    state.addressList = JSON.parse(addressList);
+  }
 };

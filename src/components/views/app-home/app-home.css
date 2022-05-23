@@ -24,8 +24,13 @@ app-home .ssel-wrapper {
   right: 0;
   display: flex;
   z-index: 100;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+app-home .ssel-wrapper > button-control {
+  margin: 1rem 0;
 }
 
 app-home .street-selector {
@@ -55,7 +60,7 @@ app-home .street-selector ul li ~ li {
 
 app-home .street-selector ul li button {
   line-height: 1.33em;
-  font-size: 9.5pt;
+  font-size: 10.33pt;
   width: 100%;
   display: flex;
   justify-content: center;
