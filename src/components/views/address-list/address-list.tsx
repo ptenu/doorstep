@@ -1,6 +1,7 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
 import state from '../../../global/store';
 import { RouterHistory } from '@stencil/router';
+import { request } from '../../../global/api';
 
 @Component({
   tag: 'address-list',
@@ -14,6 +15,29 @@ export class AddressList {
     if (state.gpsId == 0 && state.currentStreet == null && state.searchQuery == '') {
       this.restored = true;
     }
+
+    if (state.requestParams !== null) {
+      request
+        .get('/addresses', {
+          params: state.requestParams,
+        })
+        .then(resp => {
+          state.addressList = resp.data;
+        })
+        .catch(error => {
+          try {
+            state.errorMessage = error.response.data.description;
+          } catch {
+            state.errorMessage = error.message;
+          }
+          this.history.push('/');
+        });
+    }
+  }
+
+  selectAddress(address) {
+    state.currentAddress = address;
+    this.history.push(`/address/${address.uprn}`);
   }
 
   HeaderText() {
@@ -43,6 +67,7 @@ export class AddressList {
     state.addressList = [];
     sessionStorage.removeItem('addresses');
     navigator.geolocation.clearWatch(state.gpsId);
+    state.gpsId = 0;
     state.currentStreet = null;
     state.searchQuery = '';
     this.history.push('/');
@@ -65,7 +90,7 @@ export class AddressList {
             <ul role="list">
               {state.addressList.map(address => (
                 <li>
-                  <button class="address-button">
+                  <button class="address-button" onClick={() => this.selectAddress(address)}>
                     <header>{address.single_line}</header>
                     <p>{address.classification}</p>
                     {address.last_visit && (

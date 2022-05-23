@@ -26,6 +26,7 @@ export class AppRoot {
             <stencil-route-switch scrollTopOffset={0}>
               <PrivateRoute url="/" component="app-home" exact={true} />
               <PrivateRoute url="/addresses" component="address-list" />
+              <PrivateRoute url="/address/:uprn" component="address-view" />
               <stencil-route url="/login" component="app-login" />
             </stencil-route-switch>
           </stencil-router>

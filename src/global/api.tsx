@@ -26,13 +26,17 @@ request.interceptors.response.use(response => {
   return response;
 });
 
-request.interceptors.response.use(response => {
-  if (response.status == 401) {
-    state.loggedIn = false;
-  }
+request.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response.status == 401) {
+      state.loggedIn = false;
+      state.errorMessage = 'You have been logged out, please log in again.';
+    }
 
-  return response;
-});
+    return error;
+  },
+);
 
 /****** PRIVATE ROUTE */
 const PrivateRoute = ({ component, ...props }: { [key: string]: any }) => {

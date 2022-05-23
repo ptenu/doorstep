@@ -30,29 +30,11 @@ export class AppHome {
       return;
     }
     if (this.searchType == 'postcode') {
-      request
-        .get('/addresses', {
-          params: {
-            postcode: this.queryString,
-          },
-        })
-        .then(response => {
-          state.addressList = response.data;
-          state.errorMessage = '';
-          this.history.push('/addresses');
-        })
-        .catch(error => {
-          if (error.response.status == 400) {
-            state.errorMessage = 'That postcode you entered was not valid.';
-            return error;
-          }
-
-          if (error.response.status == 404) {
-            state.errorMessage = 'That postcode does not exist.';
-            return error;
-          }
-          state.errorMessage = error.message;
-        });
+      state.requestParams = {
+        postcode: this.queryString,
+      };
+      state.errorMessage = '';
+      this.history.push('/addresses');
     }
   }
 
@@ -83,7 +65,7 @@ export class AppHome {
         }
 
         if (data.length == 1) {
-          this.setStreet(data[0].usrn);
+          this.setStreet(data[0].usrn, data[0].description);
           return;
         }
 
@@ -100,19 +82,10 @@ export class AppHome {
       usrn,
       description,
     };
-    request
-      .get('/addresses', {
-        params: { street: usrn },
-      })
-      .then(response => {
-        state.addressList = response.data;
-        state.errorMessage = '';
-        this.history.push('/addresses');
-      })
-      .catch(error => {
-        state.errorMessage = error.message;
-        return error;
-      });
+
+    state.requestParams = { street: usrn };
+    state.errorMessage = '';
+    this.history.push('/addresses');
   }
 
   NearbyText() {
