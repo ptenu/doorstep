@@ -1,0 +1,22 @@
+app-root {
+    min-height: 100vh;
+}
+
+#app-header {
+    background-color: var(--primary-red);
+    color: var(--primray-contrast);
+    border-bottom: 2px solid var(--primary-dark);
+    padding: 1rem;
+    font-size: larger;
+    font-weight: 500;
+    position: sticky;
+}
+
+#app-header article {
+    padding: 0;
+}
+
+#app-header section {
+    padding: 0;
+    font-size: larger;
+}

@@ -1,0 +1,21 @@
+{
+  "name": "ptu-doorstep",
+  "private": true,
+  "version": "1.0.0",
+  "description": "PTU Doorstep",
+  "scripts": {
+    "build": "stencil build",
+    "start": "stencil build --dev --watch --serve",
+    "generate": "stencil generate"
+  },
+  "devDependencies": {
+    "@stencil/core": "2.13.0",
+    "@stencil/router": "^1.0.1",
+    "@stencil/store": "^1.5.0"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "ptu-elements": "^1.0.2"
+  }
+}

@@ -1,0 +1,17 @@
+app-home {
+  height: 100%;
+  display: block;
+}
+
+app-home input[type=text] {
+  max-width: 100% !important;
+}
+
+.legal {
+  color: var(--gray-5);
+  font-size: small;
+}
+
+.small-box {
+  margin: 1rem 0 0 -1ex;
+}
