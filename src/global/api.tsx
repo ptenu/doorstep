@@ -1,6 +1,7 @@
 import { h } from '@stencil/core';
 import axios from 'axios';
 import state from './store';
+import { CONFIG } from '../../.env';
 
 let nextClientId: string;
 if (localStorage.getItem('X-CLIENT-ID') != null) {
@@ -9,7 +10,7 @@ if (localStorage.getItem('X-CLIENT-ID') != null) {
 
 const request = axios.create({
   withCredentials: true,
-  baseURL: process.env.API_ROOT,
+  baseURL: CONFIG.API_ROOT,
   timeout: 10000,
 });
 
