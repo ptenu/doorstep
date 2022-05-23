@@ -7,7 +7,11 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { RouterHistory } from "@stencil/router";
 export namespace Components {
+    interface AddressList {
+        "history": RouterHistory;
+    }
     interface AppHome {
+        "history": RouterHistory;
     }
     interface AppLogin {
         "history": RouterHistory;
@@ -16,6 +20,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLAddressListElement extends Components.AddressList, HTMLStencilElement {
+    }
+    var HTMLAddressListElement: {
+        prototype: HTMLAddressListElement;
+        new (): HTMLAddressListElement;
+    };
     interface HTMLAppHomeElement extends Components.AppHome, HTMLStencilElement {
     }
     var HTMLAppHomeElement: {
@@ -35,13 +45,18 @@ declare global {
         new (): HTMLAppRootElement;
     };
     interface HTMLElementTagNameMap {
+        "address-list": HTMLAddressListElement;
         "app-home": HTMLAppHomeElement;
         "app-login": HTMLAppLoginElement;
         "app-root": HTMLAppRootElement;
     }
 }
 declare namespace LocalJSX {
+    interface AddressList {
+        "history"?: RouterHistory;
+    }
     interface AppHome {
+        "history"?: RouterHistory;
     }
     interface AppLogin {
         "history"?: RouterHistory;
@@ -49,6 +64,7 @@ declare namespace LocalJSX {
     interface AppRoot {
     }
     interface IntrinsicElements {
+        "address-list": AddressList;
         "app-home": AppHome;
         "app-login": AppLogin;
         "app-root": AppRoot;
@@ -58,6 +74,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "address-list": LocalJSX.AddressList & JSXBase.HTMLAttributes<HTMLAddressListElement>;
             "app-home": LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
             "app-login": LocalJSX.AppLogin & JSXBase.HTMLAttributes<HTMLAppLoginElement>;
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;

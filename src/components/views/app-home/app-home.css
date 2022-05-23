@@ -3,7 +3,7 @@ app-home {
   display: block;
 }
 
-app-home input[type=text] {
+app-home input[type='text'] {
   max-width: 100% !important;
 }
 
@@ -14,4 +14,49 @@ app-home input[type=text] {
 
 .small-box {
   margin: 1rem 0 0 -1ex;
+}
+
+app-home .ssel-wrapper {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  z-index: 100;
+  justify-content: center;
+  align-items: center;
+}
+
+app-home .street-selector {
+  max-width: 90vw;
+  max-height: 66vh;
+  background-color: #fff;
+  border: 2px solid var(--white);
+  overflow-y: scroll;
+  box-shadow: 0 0 10vh 0 var(--black);
+}
+
+app-home .street-selector ul {
+  margin: 0;
+  padding: 0;
+}
+
+app-home .street-selector ul li {
+  display: block;
+  margin: 0;
+  max-width: 100%;
+  padding: 0.33ex;
+}
+
+app-home .street-selector ul li ~ li {
+  border-top: 1px solid var(--white);
+}
+
+app-home .street-selector ul li button {
+  line-height: 1.33em;
+  font-size: 9.5pt;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }

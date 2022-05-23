@@ -1,0 +1,86 @@
+address-list {
+  display: block;
+}
+
+address-list header.sticky {
+  position: sticky;
+  top: 0;
+  padding: 1ex 0 ;
+  margin-bottom: 0;
+  border-bottom: 2px solid var(--white);
+  background-color: #fff;
+}
+
+address-list header.sticky h1 {
+  font-size: 21pt;
+  margin: 1ex 0;
+}
+
+address-list footer.sticky {
+  position: sticky;
+  bottom: 0;
+  padding: 1ex 0;
+  border-top: 2px solid var(--white);
+  background-color: #fff;
+}
+
+
+address-list ul {
+  display: block;
+  margin: 0;
+}
+
+address-list ul li {
+  display: block;
+  margin: 0;
+  max-width: 100%;
+}
+
+address-list ul li ~ li {
+  border-top: 1px solid var(--white)
+}
+
+address-list button.address-button {
+  display: block;
+  margin: 1ex 0;
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  padding: 1ex;
+  cursor: pointer;   
+  text-align: left;
+}
+
+address-list button.address-button header {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  color: var(--blue);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  margin-bottom: 1ex;
+}
+
+address-list button.address-button:focus {
+  background-color: var(--yellow);
+  outline: none;
+}
+
+
+address-list button.address-button:hover {
+  background-color: var(--white);
+}
+
+address-list button.address-button p {
+  display: block;
+  margin: 0;
+  font-size: small;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+address-list button.address-button p ~ p {
+  margin-top: 1ex;
+}
