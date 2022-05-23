@@ -9,7 +9,7 @@ if (localStorage.getItem('X-CLIENT-ID') != null) {
 
 const request = axios.create({
   withCredentials: true,
-  baseURL: 'http://localhost:8000',
+  baseURL: process.env.API_ROOT,
   timeout: 10000,
 });
 

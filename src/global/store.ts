@@ -1,13 +1,14 @@
 import { createStore } from '@stencil/store';
+import { request } from './api';
 
 /*
 "P": SurveyReturn.TenureTypes.PRIVATE_RENT,
-                "S": SurveyReturn.TenureTypes.SOCIAL_RENT,
-                "L": SurveyReturn.TenureTypes.LICENSEE,
-                "O": SurveyReturn.TenureTypes.OWNER_OCCUPIER,
-                "H": SurveyReturn.TenureTypes.HMO,
-                "U": SurveyReturn.TenureTypes.OTHER,
-                */
+"S": SurveyReturn.TenureTypes.SOCIAL_RENT,
+"L": SurveyReturn.TenureTypes.LICENSEE,
+"O": SurveyReturn.TenureTypes.OWNER_OCCUPIER,
+"H": SurveyReturn.TenureTypes.HMO,
+"U": SurveyReturn.TenureTypes.OTHER,
+*/
 
 const { state, onChange } = createStore({
   currentAddress: {},
@@ -94,6 +95,21 @@ onChange('position', newPosition => {
     near: newPosition.latitude + ',' + newPosition.longitude,
   };
   state.errorMessage = '';
+
+  request
+    .get('/addresses', {
+      params: state.requestParams,
+    })
+    .then(resp => {
+      state.addressList = resp.data;
+    })
+    .catch(error => {
+      try {
+        state.errorMessage = error.response.data.description;
+      } catch {
+        state.errorMessage = error.message;
+      }
+    });
 });
 
 export default state;

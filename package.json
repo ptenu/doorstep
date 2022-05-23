@@ -15,7 +15,9 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@types/node": "^17.0.35",
     "axios": "^0.27.2",
-    "ptu-elements": "^1.0.2"
+    "ptu-elements": "^1.0.2",
+    "rollup-plugin-dotenv": "^0.3.0"
   }
 }
